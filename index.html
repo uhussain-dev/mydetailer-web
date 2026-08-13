@@ -150,11 +150,12 @@
                             <label class="block text-xs font-medium text-gray-400 mb-1.5 text-left">Service Required</label>
                             <select class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition appearance-none cursor-pointer">
                                 <option value="">Select a service</option>
+                                <option>Wash Only</option>
+                                <option>Mini Valet</option>
+                                <option>Full Detail</option>
                                 <option>Ceramic Coating</option>
                                 <option>Paint Correction</option>
-                                <option>Full Interior Valet</option>
                                 <option>PPF / Paint Protection Film</option>
-                                <option>Machine Polishing</option>
                             </select>
                         </div>
 
@@ -230,11 +231,12 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-300 mb-2">Service Required</label>
                                 <select id="serviceType" onchange="calculateEstimate()" class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                                    <option value="wash">Wash Only</option>
+                                    <option value="mini">Mini Valet</option>
+                                    <option value="full">Full Detail</option>
                                     <option value="ceramic">Ceramic Coating</option>
                                     <option value="paint">Paint Correction</option>
-                                    <option value="interior">Full Interior Valet</option>
                                     <option value="ppf">PPF / Paint Protection Film</option>
-                                    <option value="polish">Machine Polishing</option>
                                 </select>
                             </div>
 
@@ -585,11 +587,12 @@
                         <label class="block text-xs font-medium text-gray-400 mb-1">Requested Service</label>
                         <select required class="w-full px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
                             <option value="">Select a service...</option>
+                            <option>Wash Only</option>
+                            <option>Mini Valet</option>
+                            <option>Full Detail</option>
                             <option>Ceramic Coating</option>
                             <option>Paint Correction</option>
-                            <option>Full Interior Valet</option>
                             <option>PPF / Paint Protection Film</option>
-                            <option>Machine Polishing</option>
                         </select>
                     </div>
 
@@ -656,19 +659,21 @@
 
         // Cost Estimator Calculator
         const pricingData = {
+            wash: { small: [20, 30], medium: [25, 35], large: [30, 40] },
+            mini: { small: [45, 65], medium: [55, 75], large: [65, 80] },
+            full: { small: [150, 250], medium: [200, 300], large: [280, 350] },
             ceramic: { small: [300, 450], medium: [450, 650], large: [650, 1200] },
             paint: { small: [200, 350], medium: [350, 500], large: [500, 900] },
-            interior: { small: [80, 150], medium: [120, 200], large: [180, 350] },
-            ppf: { small: [800, 1500], medium: [1200, 2500], large: [2000, 5000] },
-            polish: { small: [150, 250], medium: [250, 400], large: [400, 700] }
+            ppf: { small: [800, 1500], medium: [1200, 2500], large: [2000, 5000] }
         };
 
         const timeData = {
+            wash: { good: '30–45 Mins', minor: '30–45 Mins', heavy: '45–60 Mins' },
+            mini: { good: '1–2 Hours', minor: '1.5–2 Hours', heavy: '2–2.5 Hours' },
+            full: { good: 'Half Day', minor: 'Half Day – 1 Day', heavy: '1 Day' },
             ceramic: { good: '1–2 Days', minor: '2–3 Days', heavy: '3–4 Days' },
             paint: { good: '4–6 Hours', minor: '1–2 Days', heavy: '2–3 Days' },
-            interior: { good: '2–4 Hours', minor: '3–5 Hours', heavy: '1 Day' },
-            ppf: { good: '2–3 Days', minor: '3–4 Days', heavy: '4–5 Days' },
-            polish: { good: '3–5 Hours', minor: '1 Day', heavy: '1–2 Days' }
+            ppf: { good: '2–3 Days', minor: '3–4 Days', heavy: '4–5 Days' }
         };
 
         const conditionMultiplier = { good: 1, minor: 1.2, heavy: 1.5 };
