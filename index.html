@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyDetailer | Find Top-Rated Local Car Detailers & Mobile Valeters</title>
+    <meta name="description" content="Compare quotes for Ceramic Coatings, Paint Correction, and PPF from vetted specialists near you.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            950: '#0f172a',
+                            900: '#1e293b',
+                            800: '#1e2a3a',
+                        },
+                        cyan: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                        },
+                        emerald: {
+                            400: '#34d399',
+                            500: '#10b981',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-border {
+            background: linear-gradient(135deg, #06b6d4, #10b981);
+            padding: 1px;
+            border-radius: 0.75rem;
+        }
+        .gradient-border-inner {
+            background: #1e293b;
+            border-radius: 0.7rem;
+            height: 100%;
+        }
+        .glow-cyan { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+        .glow-emerald { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+        .metallic-text {
+            background: linear-gradient(135deg, #e2e8f0, #94a3b8, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-gray-200 antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-slate-950" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 2L3 7v11h14V7l-7-5zm0 2.236L15 8v8H5V8l5-3.764z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">My<span class="text-cyan-400">Detailer</span></span>
+                </div>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#estimator" class="text-sm text-gray-400 hover:text-cyan-400 transition">Cost Estimator</a>
+                    <a href="#directory" class="text-sm text-gray-400 hover:text-cyan-400 transition">Find Detailers</a>
+                    <a href="#for-detailers" class="text-sm text-gray-400 hover:text-cyan-400 transition">For Professionals</a>
+                    <button onclick="openModal()" class="px-4 py-2 text-sm font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 rounded-lg hover:opacity-90 transition">
+                        Get a Quote
+                    </button>
+                </div>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-900 border-b border-slate-800">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#estimator" class="block text-sm text-gray-400 hover:text-cyan-400 transition">Cost Estimator</a>
+                <a href="#directory" class="block text-sm text-gray-400 hover:text-cyan-400 transition">Find Detailers</a>
+                <a href="#for-detailers" class="block text-sm text-gray-400 hover:text-cyan-400 transition">For Professionals</a>
+                <button onclick="openModal()" class="w-full px-4 py-2 text-sm font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 rounded-lg hover:opacity-90 transition">
+                    Get a Quote
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
+        <!-- Background Effects -->
+        <div class="absolute inset-0">
+            <div class="absolute top-20 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs font-medium text-cyan-400 mb-6">
+                <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                Trusted by 5,000+ UK Car Owners
+            </div>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6">
+                Find Top-Rated Local<br>
+                <span class="metallic-text">Car Detailers</span> &amp; <span class="metallic-text">Mobile Valeters</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10">
+                Compare quotes for Ceramic Coatings, Paint Correction, and PPF from vetted specialists near you.
+            </p>
+
+            <!-- Search Form -->
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-4 md:p-6 shadow-2xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Postcode Input -->
+                        <div class="relative">
+                            <label class="block text-xs font-medium text-gray-400 mb-1.5 text-left">Location</label>
+                            <div class="relative">
+                                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <input type="text" placeholder="M1 1AG or Manchester" class="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition">
+                            </div>
+                        </div>
+
+                        <!-- Service Selector -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1.5 text-left">Service Required</label>
+                            <select class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition appearance-none cursor-pointer">
+                                <option value="">Select a service</option>
+                                <option>Ceramic Coating</option>
+                                <option>Paint Correction</option>
+                                <option>Full Interior Valet</option>
+                                <option>PPF / Paint Protection Film</option>
+                                <option>Machine Polishing</option>
+                            </select>
+                        </div>
+
+                        <!-- Type Toggle -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1.5 text-left">Detailer Type</label>
+                            <div class="flex bg-slate-800 border border-slate-600 rounded-xl p-1 h-[46px]">
+                                <button onclick="setType(this, 'all')" class="type-btn flex-1 text-xs font-medium rounded-lg transition bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950">All</button>
+                                <button onclick="setType(this, 'mobile')" class="type-btn flex-1 text-xs font-medium rounded-lg transition text-gray-400 hover:text-white">Mobile</button>
+                                <button onclick="setType(this, 'studio')" class="type-btn flex-1 text-xs font-medium rounded-lg transition text-gray-400 hover:text-white">Studio</button>
+                            </div>
+                        </div>
+
+                        <!-- Search Button -->
+                        <div>
+                            <label class="block text-xs font-medium text-transparent mb-1.5">Search</label>
+                            <button class="w-full py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl hover:opacity-90 transition glow-cyan flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                                Find Detailers Near Me
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Indicators -->
+            <div class="flex flex-wrap items-center justify-center gap-6 mt-8 text-xs text-gray-500">
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    Free to use
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    All pros vetted & insured
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    Compare up to 3 quotes
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    GDPR compliant
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cost Estimator Section -->
+    <section id="estimator" class="py-20 md:py-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Estimate Your Detailing Cost</h2>
+                <p class="text-gray-400 max-w-xl mx-auto">Get an instant price estimate based on your vehicle and requirements. No sign-up needed.</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="gradient-border">
+                    <div class="gradient-border-inner p-6 md:p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <!-- Vehicle Size -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Vehicle Size</label>
+                                <select id="vehicleSize" onchange="calculateEstimate()" class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                                    <option value="small">Hatchback / Sedan</option>
+                                    <option value="medium">SUV / 4x4</option>
+                                    <option value="large">Supercar / Luxury</option>
+                                </select>
+                            </div>
+
+                            <!-- Service Required -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Service Required</label>
+                                <select id="serviceType" onchange="calculateEstimate()" class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                                    <option value="ceramic">Ceramic Coating</option>
+                                    <option value="paint">Paint Correction</option>
+                                    <option value="interior">Full Interior Valet</option>
+                                    <option value="ppf">PPF / Paint Protection Film</option>
+                                    <option value="polish">Machine Polishing</option>
+                                </select>
+                            </div>
+
+                            <!-- Vehicle Condition -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Vehicle Condition</label>
+                                <select id="vehicleCondition" onchange="calculateEstimate()" class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                                    <option value="good">Good Condition</option>
+                                    <option value="minor">Minor Swirls</option>
+                                    <option value="heavy">Heavy Paint Damage</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Estimate Output -->
+                        <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-6 text-center">
+                            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">Estimated Cost</p>
+                                    <p id="priceEstimate" class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">£350 – £500</p>
+                                </div>
+                                <div class="hidden md:block w-px h-12 bg-slate-700"></div>
+                                <div>
+                                    <p class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">Estimated Time</p>
+                                    <p id="timeEstimate" class="text-3xl md:text-4xl font-bold text-white">1–2 Days</p>
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <button onclick="openModal()" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl hover:opacity-90 transition glow-cyan">
+                                    Get Exact Quotes From 3 Local Pros
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Directory Grid -->
+    <section id="directory" class="py-20 md:py-28 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Featured Local Detailers</h2>
+                <p class="text-gray-400 max-w-xl mx-auto">Hand-picked, fully vetted professionals with verified reviews and proven track records.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Detailer Card 1 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="h-48 bg-gradient-to-br from-slate-800 to-slate-700 relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="w-16 h-16 text-cyan-400/30 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+                                </svg>
+                                <p class="text-xs text-gray-500 mt-2">Studio Portfolio</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3 flex gap-1.5">
+                            <span class="px-2 py-0.5 text-[10px] font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full">IDA Certified</span>
+                            <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full">PVD Member</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-3">
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Apex Detailing Studio</h3>
+                                <p class="text-xs text-gray-400 flex items-center gap-1 mt-0.5">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                                    Manchester • Studio Based
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-1 bg-yellow-500/10 px-2 py-1 rounded-lg">
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <span class="text-xs font-bold text-yellow-400">4.9</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Ceramic Coating</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Paint Correction</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">PPF</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Machine Polish</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-700">
+                            <p class="text-sm text-gray-400">From <span class="text-lg font-bold text-white">£120</span></p>
+                            <button onclick="openModal()" class="px-4 py-2 text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 rounded-lg hover:opacity-90 transition">
+                                Request Quote
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailer Card 2 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="h-48 bg-gradient-to-br from-slate-800 to-slate-700 relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="w-16 h-16 text-emerald-400/30 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+                                </svg>
+                                <p class="text-xs text-gray-500 mt-2">Mobile Service</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full">Verified Pro</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-3">
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Fresh Finish Mobile Valeting</h3>
+                                <p class="text-xs text-gray-400 flex items-center gap-1 mt-0.5">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                                    Stockport • Mobile Specialist
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-1 bg-yellow-500/10 px-2 py-1 rounded-lg">
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <span class="text-xs font-bold text-yellow-400">5.0</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Full Valet</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Interior Deep Clean</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Machine Polish</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Wax Seal</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-700">
+                            <p class="text-sm text-gray-400">From <span class="text-lg font-bold text-white">£80</span></p>
+                            <button onclick="openModal()" class="px-4 py-2 text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 rounded-lg hover:opacity-90 transition">
+                                Request Quote
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailer Card 3 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="h-48 bg-gradient-to-br from-slate-800 to-slate-700 relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="w-16 h-16 text-cyan-400/30 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+                                </svg>
+                                <p class="text-xs text-gray-500 mt-2">Studio Portfolio</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-0.5 text-[10px] font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full">Gtechniq Accredited</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-3">
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Precision Coatings & PPF</h3>
+                                <p class="text-xs text-gray-400 flex items-center gap-1 mt-0.5">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                                    Cheshire • Studio Based
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-1 bg-yellow-500/10 px-2 py-1 rounded-lg">
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <span class="text-xs font-bold text-yellow-400">4.8</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">PPF Installation</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Ceramic Coating</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Paint Correction</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Graphene Coating</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-700">
+                            <p class="text-sm text-gray-400">From <span class="text-lg font-bold text-white">£250</span></p>
+                            <button onclick="openModal()" class="px-4 py-2 text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 rounded-lg hover:opacity-90 transition">
+                                Request Quote
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Detailers B2B Section -->
+    <section id="for-detailers" class="py-20 md:py-28 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs font-medium text-emerald-400 mb-6">
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/><path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/></svg>
+                For Professionals
+            </div>
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+                Are You a Professional Detailer<br class="hidden md:block"> or Mobile Valeter?
+            </h2>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
+                Join MyDetailer to showcase your portfolio and receive direct quote requests from car owners in your area.
+            </p>
+
+            <div class="bg-slate-900/80 border border-slate-700 rounded-2xl p-8 mb-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div>
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        </div>
+                        <h3 class="text-sm font-semibold text-white mb-1">Get Seen</h3>
+                        <p class="text-xs text-gray-400">Showcase your work to thousands of local car owners</p>
+                    </div>
+                    <div>
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h3 class="text-sm font-semibold text-white mb-1">Verified Leads</h3>
+                        <p class="text-xs text-gray-400">Receive real quote requests from qualified car owners</p>
+                    </div>
+                    <div>
+                        <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                        </div>
+                        <h3 class="text-sm font-semibold text-white mb-1">Grow Revenue</h3>
+                        <p class="text-xs text-gray-400">Fill your calendar with high-value detailing bookings</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl hover:opacity-90 transition glow-cyan">
+                    List Your Business (£29/mo)
+                </button>
+                <button class="w-full sm:w-auto px-8 py-4 bg-slate-800 border border-slate-600 text-white font-bold text-sm rounded-xl hover:bg-slate-700 transition">
+                    Claim Free Profile
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-slate-950" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2L3 7v11h14V7l-7-5zm0 2.236L15 8v8H5V8l5-3.764z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold text-white">My<span class="text-cyan-400">Detailer</span></span>
+                    </div>
+                    <p class="text-sm text-gray-400 max-w-sm mb-4">
+                        The UK's specialist directory and quote-matching platform for professional car detailers and mobile valeters.
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        © 2024 MyDetailer Ltd. All rights reserved. Registered in England & Wales.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-3">For Car Owners</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-cyan-400 transition">Find Detailers</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-cyan-400 transition">Cost Estimator</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-cyan-400 transition">Compare Quotes</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-cyan-400 transition">Detailing Guides</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-3">For Detailers</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-cyan-400 transition">List Your Business</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-cyan-400 transition">Pricing</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-cyan-400 transition">Success Stories</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-cyan-400 transition">Partner Programme</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Legal Links & GDPR -->
+            <div class="pt-8 border-t border-slate-800">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex flex-wrap items-center gap-4">
+                        <a href="#" class="text-xs text-gray-400 hover:text-cyan-400 transition">Privacy Policy</a>
+                        <span class="text-gray-700">|</span>
+                        <a href="#" class="text-xs text-gray-400 hover:text-cyan-400 transition">Terms of Service</a>
+                        <span class="text-gray-700">|</span>
+                        <a href="#" class="text-xs text-gray-400 hover:text-cyan-400 transition">Cookie Policy</a>
+                        <span class="text-gray-700">|</span>
+                        <a href="#" class="text-xs text-gray-400 hover:text-cyan-400 transition">GDPR Compliance</a>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                        <span class="text-xs text-gray-400">ICO Registered</span>
+                    </div>
+                </div>
+                <p class="text-[10px] text-gray-500 mt-4 text-center md:text-left">
+                    GDPR Disclosure: MyDetailer processes personal data in accordance with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. We collect only the minimum data necessary to match you with local detailing professionals. Your data is never sold to third parties. You may exercise your rights to access, rectify, or erase your data at any time by contacting our Data Protection Officer at dpo@mydetailer.co.uk.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Quote Request Modal -->
+    <div id="quoteModal" class="fixed inset-0 z-[100] hidden">
+        <div class="modal-backdrop absolute inset-0" onclick="closeModal()"></div>
+        <div class="relative flex items-center justify-center min-h-screen p-4">
+            <div class="animate-fade-in relative bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 md:p-8 shadow-2xl">
+                <!-- Close Button -->
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+
+                <div class="text-center mb-6">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Quick Quote Request</h3>
+                    <p class="text-sm text-gray-400 mt-1">Get matched with up to 3 local detailing pros</p>
+                </div>
+
+                <form id="quoteForm" onsubmit="submitQuote(event)" class="space-y-4">
+                    <!-- Vehicle Info -->
+                    <div class="grid grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">Car Make</label>
+                            <input type="text" placeholder="e.g. BMW" required class="w-full px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">Model</label>
+                            <input type="text" placeholder="e.g. M4" required class="w-full px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">Year</label>
+                            <input type="text" placeholder="e.g. 2023" required class="w-full px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                        </div>
+                    </div>
+
+                    <!-- Postcode -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Postcode</label>
+                        <input type="text" placeholder="e.g. M1 1AG" required class="w-full px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                    </div>
+
+                    <!-- Service -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Requested Service</label>
+                        <select required class="w-full px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                            <option value="">Select a service...</option>
+                            <option>Ceramic Coating</option>
+                            <option>Paint Correction</option>
+                            <option>Full Interior Valet</option>
+                            <option>PPF / Paint Protection Film</option>
+                            <option>Machine Polishing</option>
+                        </select>
+                    </div>
+
+                    <!-- Contact Details -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Full Name</label>
+                        <input type="text" placeholder="John Smith" required class="w-full px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">Email</label>
+                            <input type="email" placeholder="john@email.com" required class="w-full px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-400 mb-1">Phone Number</label>
+                            <input type="tel" placeholder="07XXX XXX XXX" required class="w-full px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                        </div>
+                    </div>
+
+                    <!-- GDPR Consent -->
+                    <div class="flex items-start gap-2">
+                        <input type="checkbox" id="gdprConsent" required class="mt-1 w-4 h-4 rounded border-slate-600 bg-slate-800 text-cyan-500 focus:ring-cyan-500">
+                        <label for="gdprConsent" class="text-xs text-gray-400">I consent to MyDetailer processing my personal data to match me with local detailers. I understand I can withdraw consent at any time. <a href="#" class="text-cyan-400 hover:underline">Privacy Policy</a></label>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl hover:opacity-90 transition glow-cyan">
+                        Send Request to Local Detailers
+                    </button>
+                </form>
+
+                <!-- Success State -->
+                <div id="quoteSuccess" class="hidden text-center py-8">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                    <h4 class="text-lg font-bold text-white mb-2">Request Sent!</h4>
+                    <p class="text-sm text-gray-400 mb-4">We're matching you with up to 3 local detailers. You'll receive quotes within 24 hours.</p>
+                    <button onclick="closeModal()" class="px-6 py-2 text-sm font-semibold bg-slate-800 border border-slate-600 text-white rounded-lg hover:bg-slate-700 transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Type Toggle in Hero Search
+        function setType(btn, type) {
+            document.querySelectorAll('.type-btn').forEach(b => {
+                b.classList.remove('bg-gradient-to-r', 'from-cyan-500', 'to-emerald-500', 'text-slate-950');
+                b.classList.add('text-gray-400');
+            });
+            btn.classList.remove('text-gray-400');
+            btn.classList.add('bg-gradient-to-r', 'from-cyan-500', 'to-emerald-500', 'text-slate-950');
+        }
+
+        // Cost Estimator Calculator
+        const pricingData = {
+            ceramic: { small: [300, 450], medium: [450, 650], large: [650, 1200] },
+            paint: { small: [200, 350], medium: [350, 500], large: [500, 900] },
+            interior: { small: [80, 150], medium: [120, 200], large: [180, 350] },
+            ppf: { small: [800, 1500], medium: [1200, 2500], large: [2000, 5000] },
+            polish: { small: [150, 250], medium: [250, 400], large: [400, 700] }
+        };
+
+        const timeData = {
+            ceramic: { good: '1–2 Days', minor: '2–3 Days', heavy: '3–4 Days' },
+            paint: { good: '4–6 Hours', minor: '1–2 Days', heavy: '2–3 Days' },
+            interior: { good: '2–4 Hours', minor: '3–5 Hours', heavy: '1 Day' },
+            ppf: { good: '2–3 Days', minor: '3–4 Days', heavy: '4–5 Days' },
+            polish: { good: '3–5 Hours', minor: '1 Day', heavy: '1–2 Days' }
+        };
+
+        const conditionMultiplier = { good: 1, minor: 1.2, heavy: 1.5 };
+
+        function calculateEstimate() {
+            const size = document.getElementById('vehicleSize').value;
+            const service = document.getElementById('serviceType').value;
+            const condition = document.getElementById('vehicleCondition').value;
+
+            const baseRange = pricingData[service][size];
+            const multiplier = conditionMultiplier[condition];
+
+            const low = Math.round(baseRange[0] * multiplier);
+            const high = Math.round(baseRange[1] * multiplier);
+            const time = timeData[service][condition];
+
+            document.getElementById('priceEstimate').textContent = `£${low} – £${high}`;
+            document.getElementById('timeEstimate').textContent = time;
+        }
+
+        // Modal Functions
+        function openModal() {
+            document.getElementById('quoteModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('quoteForm').classList.remove('hidden');
+            document.getElementById('quoteSuccess').classList.add('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('quoteModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function submitQuote(e) {
+            e.preventDefault();
+            document.getElementById('quoteForm').classList.add('hidden');
+            document.getElementById('quoteSuccess').classList.remove('hidden');
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initialize estimator
+        calculateEstimate();
+    </script>
+</body>
+</html>
