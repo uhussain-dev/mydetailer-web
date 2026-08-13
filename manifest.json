@@ -1,0 +1,27 @@
+{
+  "name": "MyDetailer - Find Local Car Detailers & Mobile Valeters",
+  "short_name": "MyDetailer",
+  "description": "Compare quotes for Ceramic Coatings, Paint Correction, and PPF from vetted specialists near you.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#06b6d4",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "lifestyle"],
+  "lang": "en-GB"
+}

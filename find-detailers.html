@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Local Detailers | MyDetailer</title>
+    <meta name="description" content="Search and compare vetted car detailers and mobile valeters near you. Filter by service, location, and type.">
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#06b6d4">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 950: '#0f172a', 900: '#1e293b', 800: '#1e2a3a' },
+                        cyan: { 400: '#22d3ee', 500: '#06b6d4' },
+                        emerald: { 400: '#34d399', 500: '#10b981' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glow-cyan { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .drawer-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .drawer-overlay.active { opacity: 1; pointer-events: auto; }
+        .drawer-panel { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .drawer-panel.active { transform: translateX(0); }
+    </style>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js'); });
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-gray-200 antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-slate-950" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2L3 7v11h14V7l-7-5zm0 2.236L15 8v8H5V8l5-3.764z"/></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">My<span class="text-cyan-400">Detailer</span></span>
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="/find-detailers.html" class="text-sm text-cyan-400 font-medium">Find Detailers</a>
+                    <a href="/pricing-guide.html" class="text-sm text-gray-400 hover:text-cyan-400 transition">Pricing Guide</a>
+                    <a href="/join-as-detailer.html" class="text-sm text-gray-400 hover:text-cyan-400 transition">For Professionals</a>
+                    <a href="/index.html#estimator" class="px-4 py-2 text-sm font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 rounded-lg hover:opacity-90 transition">Get a Quote</a>
+                </div>
+                <button onclick="openDrawer()" class="md:hidden p-2 text-gray-400 hover:text-white transition" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer Overlay -->
+    <div id="drawerOverlay" class="drawer-overlay fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm" onclick="closeDrawer()"></div>
+    <!-- Mobile Drawer Panel -->
+    <aside id="drawerPanel" class="drawer-panel fixed top-0 right-0 z-[70] h-full w-72 bg-slate-900 border-l border-slate-700 shadow-2xl flex flex-col">
+        <div class="flex items-center justify-between px-5 py-4 border-b border-slate-800">
+            <span class="text-lg font-bold text-white">My<span class="text-cyan-400">Detailer</span></span>
+            <button onclick="closeDrawer()" class="p-2 text-gray-400 hover:text-white transition" aria-label="Close menu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-5 py-6 space-y-2">
+            <a href="/index.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>
+                Home
+            </a>
+            <a href="/find-detailers.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-white bg-slate-800/60 text-sm font-medium">
+                <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                Find Detailers
+            </a>
+            <a href="/pricing-guide.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Pricing Guide
+            </a>
+            <a href="/join-as-detailer.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                For Professionals
+            </a>
+        </nav>
+        <div class="px-5 py-4 border-t border-slate-800">
+            <a href="/index.html#estimator" class="block w-full py-3 text-center bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl hover:opacity-90 transition">Get a Quote</a>
+        </div>
+    </aside>
+
+    <!-- Page Content -->
+    <main class="pt-24 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Page Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Find Detailers Near You</h1>
+                <p class="text-gray-400 max-w-xl mx-auto">Search by location, service, and type to discover top-rated car detailing professionals in your area.</p>
+            </div>
+
+            <!-- Search / Filter Bar -->
+            <div class="bg-slate-900 border border-slate-700 rounded-2xl p-4 md:p-6 shadow-xl mb-10">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="relative">
+                        <label class="block text-xs font-medium text-gray-400 mb-1.5">Location</label>
+                        <input type="text" placeholder="Postcode or City" class="w-full pl-4 pr-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1.5">Service</label>
+                        <select class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                            <option value="">All Services</option>
+                            <option>Wash Only</option>
+                            <option>Mini Valet</option>
+                            <option>Full Detail</option>
+                            <option>Ceramic Coating</option>
+                            <option>Paint Correction</option>
+                            <option>PPF / Paint Protection Film</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1.5">Type</label>
+                        <select class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                            <option value="">All Types</option>
+                            <option>Mobile Detailer</option>
+                            <option>Studio Based</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button class="w-full py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl hover:opacity-90 transition glow-cyan flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="h-44 bg-gradient-to-br from-slate-800 to-slate-700 relative flex items-center justify-center">
+                        <svg class="w-14 h-14 text-cyan-400/30" fill="currentColor" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                        <div class="absolute top-3 right-3 flex gap-1.5">
+                            <span class="px-2 py-0.5 text-[10px] font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full">IDA Certified</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Apex Detailing Studio</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">Manchester &bull; Studio Based</p>
+                            </div>
+                            <div class="flex items-center gap-1 bg-yellow-500/10 px-2 py-1 rounded-lg">
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <span class="text-xs font-bold text-yellow-400">4.9</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Ceramic Coating</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Paint Correction</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">PPF</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-700">
+                            <p class="text-sm text-gray-400">From <span class="text-lg font-bold text-white">£120</span></p>
+                            <a href="/index.html#estimator" class="px-4 py-2 text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 rounded-lg hover:opacity-90 transition">Request Quote</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="h-44 bg-gradient-to-br from-slate-800 to-slate-700 relative flex items-center justify-center">
+                        <svg class="w-14 h-14 text-emerald-400/30" fill="currentColor" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full">Verified Pro</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Fresh Finish Mobile Valeting</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">Stockport &bull; Mobile Specialist</p>
+                            </div>
+                            <div class="flex items-center gap-1 bg-yellow-500/10 px-2 py-1 rounded-lg">
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <span class="text-xs font-bold text-yellow-400">5.0</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Full Valet</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Mini Valet</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Wash Only</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-700">
+                            <p class="text-sm text-gray-400">From <span class="text-lg font-bold text-white">£20</span></p>
+                            <a href="/index.html#estimator" class="px-4 py-2 text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 rounded-lg hover:opacity-90 transition">Request Quote</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden card-hover transition-all duration-300">
+                    <div class="h-44 bg-gradient-to-br from-slate-800 to-slate-700 relative flex items-center justify-center">
+                        <svg class="w-14 h-14 text-cyan-400/30" fill="currentColor" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                        <div class="absolute top-3 right-3">
+                            <span class="px-2 py-0.5 text-[10px] font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-full">Gtechniq Accredited</span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Precision Coatings & PPF</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">Cheshire &bull; Studio Based</p>
+                            </div>
+                            <div class="flex items-center gap-1 bg-yellow-500/10 px-2 py-1 rounded-lg">
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <span class="text-xs font-bold text-yellow-400">4.8</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">PPF Installation</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Ceramic Coating</span>
+                            <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-gray-300 rounded-md">Full Detail</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-700">
+                            <p class="text-sm text-gray-400">From <span class="text-lg font-bold text-white">£250</span></p>
+                            <a href="/index.html#estimator" class="px-4 py-2 text-xs font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 rounded-lg hover:opacity-90 transition">Request Quote</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination placeholder -->
+            <div class="flex justify-center mt-10">
+                <div class="flex items-center gap-2">
+                    <button class="w-10 h-10 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm">1</button>
+                    <button class="w-10 h-10 rounded-lg bg-slate-800 border border-slate-700 text-gray-400 text-sm hover:text-white transition">2</button>
+                    <button class="w-10 h-10 rounded-lg bg-slate-800 border border-slate-700 text-gray-400 text-sm hover:text-white transition">3</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-gray-500">&copy; 2024 MyDetailer Ltd. All rights reserved.</p>
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-xs text-gray-400 hover:text-cyan-400 transition">Privacy Policy</a>
+                <a href="#" class="text-xs text-gray-400 hover:text-cyan-400 transition">Terms of Service</a>
+                <a href="#" class="text-xs text-gray-400 hover:text-cyan-400 transition">GDPR</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openDrawer() {
+            document.getElementById('drawerOverlay').classList.add('active');
+            document.getElementById('drawerPanel').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeDrawer() {
+            document.getElementById('drawerOverlay').classList.remove('active');
+            document.getElementById('drawerPanel').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+    </script>
+</body>
+</html>
