@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Insights & Verified Stats | MyDetailer</title>
+    <meta name="description" content="100% verified data from real car owners and vetted specialists across the UK. View platform stats, regional pricing benchmarks, and customer reviews.">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#06b6d4">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 950: '#0f172a', 900: '#1e293b', 800: '#1e2a3a' },
+                        cyan: { 400: '#22d3ee', 500: '#06b6d4' },
+                        emerald: { 400: '#34d399', 500: '#10b981' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glow-cyan { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+        .drawer-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .drawer-overlay.active { opacity: 1; pointer-events: auto; }
+        .drawer-panel { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .drawer-panel.active { transform: translateX(0); }
+    </style>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js'); });
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-gray-200 antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-slate-950" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2L3 7v11h14V7l-7-5zm0 2.236L15 8v8H5V8l5-3.764z"/></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">My<span class="text-cyan-400">Detailer</span></span>
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="index.html" class="text-sm text-gray-400 hover:text-cyan-400 transition">Home</a>
+                    <a href="find-detailers.html" class="text-sm text-gray-400 hover:text-cyan-400 transition">Cities</a>
+                    <a href="pricing-guide.html" class="text-sm text-gray-400 hover:text-cyan-400 transition">Pricing</a>
+                    <a href="stats.html" class="text-sm text-cyan-400 font-medium">Stats</a>
+                    <a href="join-as-detailer.html" class="px-4 py-2 text-sm font-semibold bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 rounded-lg hover:opacity-90 transition">Join as Detailer</a>
+                </div>
+                <button onclick="openDrawer()" class="md:hidden p-2 text-gray-400 hover:text-white transition" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer Overlay -->
+    <div id="drawerOverlay" class="drawer-overlay fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm" onclick="closeDrawer()"></div>
+    <!-- Mobile Drawer Panel -->
+    <aside id="drawerPanel" class="drawer-panel fixed top-0 right-0 z-[70] h-full w-72 bg-slate-900 border-l border-slate-700 shadow-2xl flex flex-col">
+        <div class="flex items-center justify-between px-5 py-4 border-b border-slate-800">
+            <span class="text-lg font-bold text-white">My<span class="text-cyan-400">Detailer</span></span>
+            <button onclick="closeDrawer()" class="p-2 text-gray-400 hover:text-white transition" aria-label="Close menu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-5 py-6 space-y-2">
+            <a href="index.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>
+                Home
+            </a>
+            <a href="find-detailers.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                Cities
+            </a>
+            <a href="pricing-guide.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Pricing
+            </a>
+            <a href="stats.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-white bg-slate-800/60 text-sm font-medium">
+                <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                Stats
+            </a>
+            <a href="join-as-detailer.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                Join as Detailer
+            </a>
+        </nav>
+        <div class="px-5 py-4 border-t border-slate-800">
+            <a href="join-as-detailer.html" class="block w-full py-3 text-center bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl hover:opacity-90 transition">Claim Free Profile</a>
+        </div>
+    </aside>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="relative pt-28 pb-12 md:pt-36 md:pb-16 overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute top-20 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 right-1/4 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs font-medium text-cyan-400 mb-6">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                Platform Data
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-4">MyDetailer Platform Insights &amp; Verified Stats</h1>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">100% verified data from real car owners and vetted specialists across the UK.</p>
+        </div>
+    </section>
+
+    <!-- ==================== PLATFORM METRICS ==================== -->
+    <section class="py-12 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Card 1 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 md:p-6 text-center">
+                    <p class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mb-1">1,240+</p>
+                    <p class="text-sm font-semibold text-white mb-0.5">Total Completed Jobs</p>
+                    <p class="text-xs text-gray-500">Verified local bookings</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 md:p-6 text-center">
+                    <p class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mb-1">4.92 / 5.0</p>
+                    <p class="text-sm font-semibold text-white mb-0.5">Average Platform Rating</p>
+                    <p class="text-xs text-gray-500">From 850+ verified reviews</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 md:p-6 text-center">
+                    <p class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mb-1">&lt; 18 Mins</p>
+                    <p class="text-sm font-semibold text-white mb-0.5">Avg Response Time</p>
+                    <p class="text-xs text-gray-500">Direct WhatsApp / Email response</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 md:p-6 text-center">
+                    <p class="text-3xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mb-1">150+</p>
+                    <p class="text-sm font-semibold text-white mb-0.5">Active Vetted Specialists</p>
+                    <p class="text-xs text-gray-500">Across 25+ UK cities</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== REGIONAL PRICING BENCHMARKS ==================== -->
+    <section class="py-12 md:py-20 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">UK Detailing Average Cost Benchmarks</h2>
+                <p class="text-gray-400 max-w-xl mx-auto text-sm">Aggregated from verified completed bookings across the platform.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+                <!-- Wash & Express -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+                    </div>
+                    <h3 class="text-sm font-bold text-white mb-1">Wash &amp; Express Valet</h3>
+                    <p class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mb-2">&pound;35 &ndash; &pound;55</p>
+                    <p class="text-xs text-gray-500">National average range</p>
+                </div>
+                <!-- Full Detail -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                    </div>
+                    <h3 class="text-sm font-bold text-white mb-1">Full Interior &amp; Exterior Detail</h3>
+                    <p class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mb-2">&pound;120 &ndash; &pound;220</p>
+                    <p class="text-xs text-gray-500">National average range</p>
+                </div>
+                <!-- Paint Correction -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h3 class="text-sm font-bold text-white mb-1">1-Stage Paint Correction</h3>
+                    <p class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mb-2">&pound;250 &ndash; &pound;400</p>
+                    <p class="text-xs text-gray-500">National average range</p>
+                </div>
+                <!-- Ceramic Coating -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <h3 class="text-sm font-bold text-white mb-1">Ceramic Coating Protection</h3>
+                    <p class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 mb-2">&pound;450 &ndash; &pound;850+</p>
+                    <p class="text-xs text-gray-500">National average range</p>
+                </div>
+            </div>
+
+            <!-- Pro Tip Callout -->
+            <div class="bg-slate-800/70 border border-cyan-500/30 rounded-xl p-4 md:p-5 flex items-start gap-3 max-w-3xl mx-auto">
+                <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-300"><strong class="text-white">Pro Tip:</strong> Prices vary based on vehicle size (Hatchback vs SUV). Use our <a href="pricing-guide.html" class="text-cyan-400 hover:underline font-medium">Detailing Cost Estimator</a> for exact model estimates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== VERIFIED REVIEWS ==================== -->
+    <section class="py-12 md:py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Latest Verified Customer Reviews</h2>
+                <p class="text-gray-400 max-w-xl mx-auto text-sm">Only car owners who booked through MyDetailer can leave verified ratings.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6">
+                    <!-- Header -->
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">Mark T.</h4>
+                            <p class="text-xs text-gray-400">BMW M3 Competition</p>
+                        </div>
+                        <div class="flex items-center gap-1.5 px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+                            <svg class="w-3.5 h-3.5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span class="text-[10px] font-bold text-emerald-400">Verified Booking</span>
+                        </div>
+                    </div>
+                    <!-- Ratings -->
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Punctuality</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Work Quality</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Communication</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Value</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;<span class="text-gray-600">&#9733;</span></span>
+                        </div>
+                    </div>
+                    <!-- Comment -->
+                    <p class="text-sm text-gray-300 mb-3">"Absolutely stunning paint correction on my M3. The swirl marks from the previous owner are completely gone. Would recommend to anyone looking for a proper machine polish."</p>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800">
+                        <p class="text-[10px] text-gray-500">12 July 2024</p>
+                        <p class="text-[10px] text-cyan-400 font-medium">Serviced by: Apex Detailing Manchester</p>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">Sarah L.</h4>
+                            <p class="text-xs text-gray-400">Range Rover Sport</p>
+                        </div>
+                        <div class="flex items-center gap-1.5 px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+                            <svg class="w-3.5 h-3.5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span class="text-[10px] font-bold text-emerald-400">Verified Booking</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Punctuality</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Work Quality</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Communication</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Value</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-3">"Had a full ceramic coating applied after a 2-stage correction. The hydrophobic effect is incredible and the gloss is showroom-level. Came to my house which was so convenient with 2 kids."</p>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800">
+                        <p class="text-[10px] text-gray-500">3 August 2024</p>
+                        <p class="text-[10px] text-cyan-400 font-medium">Serviced by: Fresh Finish Stockport</p>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">James P.</h4>
+                            <p class="text-xs text-gray-400">Porsche 911 GT3</p>
+                        </div>
+                        <div class="flex items-center gap-1.5 px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+                            <svg class="w-3.5 h-3.5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span class="text-[10px] font-bold text-emerald-400">Verified Booking</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Punctuality</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Work Quality</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Communication</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;<span class="text-gray-600">&#9733;</span></span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] text-gray-400">Value</span>
+                            <span class="text-[11px] text-yellow-400">&#9733;&#9733;&#9733;&#9733;<span class="text-gray-600">&#9733;</span></span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-3">"Full front PPF wrap on the GT3. Flawless edges, invisible install, and done within the timeframe promised. Premium price but the workmanship justifies every penny."</p>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800">
+                        <p class="text-[10px] text-gray-500">19 August 2024</p>
+                        <p class="text-[10px] text-cyan-400 font-medium">Serviced by: Precision Coatings Cheshire</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-slate-950" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2L3 7v11h14V7l-7-5zm0 2.236L15 8v8H5V8l5-3.764z"/></svg>
+                    </div>
+                    <span class="text-lg font-bold text-white">My<span class="text-cyan-400">Detailer</span></span>
+                </div>
+                <div class="flex flex-wrap items-center gap-5 text-sm">
+                    <a href="index.html" class="text-gray-400 hover:text-cyan-400 transition">Home</a>
+                    <a href="find-detailers.html" class="text-gray-400 hover:text-cyan-400 transition">Find Detailers</a>
+                    <a href="pricing-guide.html" class="text-gray-400 hover:text-cyan-400 transition">Pricing</a>
+                    <a href="join-as-detailer.html" class="text-gray-400 hover:text-cyan-400 transition">Claim Your Free Profile</a>
+                </div>
+            </div>
+            <div class="pt-6 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-gray-500">&copy; 2024 MyDetailer Ltd. All rights reserved. Registered in England &amp; Wales.</p>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="text-xs text-gray-400 hover:text-cyan-400 transition">Privacy Policy</a>
+                    <a href="#" class="text-xs text-gray-400 hover:text-cyan-400 transition">Terms of Service</a>
+                    <a href="#" class="text-xs text-gray-400 hover:text-cyan-400 transition">GDPR</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        function openDrawer() {
+            document.getElementById('drawerOverlay').classList.add('active');
+            document.getElementById('drawerPanel').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeDrawer() {
+            document.getElementById('drawerOverlay').classList.remove('active');
+            document.getElementById('drawerPanel').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+    </script>
+</body>
+</html>
