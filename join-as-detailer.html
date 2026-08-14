@@ -246,53 +246,132 @@
         </div>
     </section>
 
-    <!-- Sign Up Form -->
-    <section id="signup" class="py-16 md:py-24 bg-slate-900/50">
-        <div class="max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl font-bold text-white text-center mb-8">Register Your Interest</h2>
-            <form onsubmit="handleSignup(event)" class="bg-slate-900 border border-slate-700 rounded-2xl p-6 md:p-8 space-y-4">
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1">Business Name</label>
-                    <input type="text" placeholder="e.g. Apex Detailing Studio" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1">Your Name</label>
-                        <input type="text" placeholder="Full name" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+    <!-- Claim Free Profile Form -->
+    <section id="signup" class="py-16 md:py-24">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden">
+                <!-- Accent glow -->
+                <div class="absolute -top-20 -right-20 w-60 h-60 bg-cyan-500/5 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-emerald-500/5 rounded-full blur-3xl"></div>
+
+                <div class="relative">
+                    <!-- Header -->
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-4">Free During Beta</div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">Claim Your Free Founding Profile</h2>
+                        <p class="text-sm text-gray-400">Get listed and start receiving leads from local car owners. Takes 2 minutes.</p>
                     </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1">Phone</label>
-                        <input type="tel" placeholder="07XXX XXX XXX" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+
+                    <!-- Form -->
+                    <form id="freeProfileForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="handleFreeProfile(event)" class="space-y-5">
+                        <!-- Business Name -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-1.5">Business Name <span class="text-cyan-400">*</span></label>
+                            <input type="text" name="business_name" placeholder="e.g. Apex Detailing Studio" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                        </div>
+
+                        <!-- Contact Name -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-1.5">Contact Name <span class="text-cyan-400">*</span></label>
+                            <input type="text" name="contact_name" placeholder="Your full name" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                        </div>
+
+                        <!-- City / Region -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-1.5">City / Primary Region Covered <span class="text-cyan-400">*</span></label>
+                            <input type="text" name="region" placeholder="e.g. Manchester & Stockport" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                        </div>
+
+                        <!-- Phone & Email -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium text-gray-300 mb-1.5">WhatsApp / Phone <span class="text-cyan-400">*</span></label>
+                                <div class="relative">
+                                    <input type="tel" name="phone" placeholder="07XXX XXX XXX" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-500">For lead delivery</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-300 mb-1.5">Email Address <span class="text-cyan-400">*</span></label>
+                                <input type="email" name="email" placeholder="you@business.co.uk" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                            </div>
+                        </div>
+
+                        <!-- Business Type (Radio) -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-2.5">Business Type <span class="text-cyan-400">*</span></label>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <label class="flex items-center gap-2 px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl cursor-pointer hover:border-cyan-500/50 transition has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                                    <input type="radio" name="business_type" value="Mobile Valeter / Detailer" required class="w-4 h-4 text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500">
+                                    <span class="text-xs text-gray-300">Mobile</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl cursor-pointer hover:border-cyan-500/50 transition has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                                    <input type="radio" name="business_type" value="Studio / Detailing Shop" class="w-4 h-4 text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500">
+                                    <span class="text-xs text-gray-300">Studio</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl cursor-pointer hover:border-cyan-500/50 transition has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                                    <input type="radio" name="business_type" value="Both" class="w-4 h-4 text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500">
+                                    <span class="text-xs text-gray-300">Both</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Services Offered (Checkboxes) -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-2.5">Services Offered <span class="text-cyan-400">*</span></label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <label class="flex items-center gap-2 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:border-cyan-500/50 transition has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                                    <input type="checkbox" name="services" value="Wash Only" class="w-4 h-4 rounded text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500">
+                                    <span class="text-xs text-gray-300">Wash Only</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:border-cyan-500/50 transition has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                                    <input type="checkbox" name="services" value="Mini Valet" class="w-4 h-4 rounded text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500">
+                                    <span class="text-xs text-gray-300">Mini Valet</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:border-cyan-500/50 transition has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                                    <input type="checkbox" name="services" value="Full Detail" class="w-4 h-4 rounded text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500">
+                                    <span class="text-xs text-gray-300">Full Detail</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:border-cyan-500/50 transition has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                                    <input type="checkbox" name="services" value="Paint Correction" class="w-4 h-4 rounded text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500">
+                                    <span class="text-xs text-gray-300">Paint Correction</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:border-cyan-500/50 transition has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                                    <input type="checkbox" name="services" value="Ceramic Coating" class="w-4 h-4 rounded text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500">
+                                    <span class="text-xs text-gray-300">Ceramic Coating</span>
+                                </label>
+                                <label class="flex items-center gap-2 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-lg cursor-pointer hover:border-cyan-500/50 transition has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                                    <input type="checkbox" name="services" value="PPF (Paint Protection Film)" class="w-4 h-4 rounded text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500">
+                                    <span class="text-xs text-gray-300">PPF</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Instagram / Website (Optional) -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-1.5">Instagram Handle / Website URL <span class="text-gray-500">(optional)</span></label>
+                            <input type="text" name="social_url" placeholder="@yourbusiness or https://..." class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl hover:opacity-90 transition glow-cyan flex items-center justify-center gap-2 mt-2">
+                            Submit &amp; Claim Free Profile
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </button>
+
+                        <!-- Reassurance -->
+                        <p class="text-xs text-gray-400 text-center mt-3">
+                            &#9889; 100% Free while in beta. No credit card required. We will review and publish your verified profile within 24 hours.
+                        </p>
+                    </form>
+
+                    <!-- Success State -->
+                    <div id="freeProfileSuccess" class="hidden text-center py-10">
+                        <div class="text-4xl mb-4">&#127881;</div>
+                        <h3 class="text-xl font-bold text-white mb-2">Thanks! Your profile details have been received.</h3>
+                        <p class="text-sm text-gray-400 max-w-sm mx-auto">We'll set up your card and text you your live link shortly!</p>
                     </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1">Email</label>
-                    <input type="email" placeholder="you@business.co.uk" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1">Postcode / Area Covered</label>
-                    <input type="text" placeholder="e.g. M1 or Greater Manchester" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1">Type</label>
-                    <select required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
-                        <option value="">Select...</option>
-                        <option>Mobile Detailer</option>
-                        <option>Studio Based</option>
-                        <option>Both</option>
-                    </select>
-                </div>
-                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl hover:opacity-90 transition glow-cyan">
-                    Submit Registration
-                </button>
-            </form>
-            <!-- Success message (hidden by default) -->
-            <div id="signupSuccess" class="hidden mt-6 text-center bg-slate-900 border border-emerald-500/30 rounded-2xl p-6">
-                <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                    <svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                </div>
-                <h4 class="text-lg font-bold text-white mb-1">Registration Received!</h4>
-                <p class="text-sm text-gray-400">Our team will be in touch within 24 hours to get your profile set up.</p>
             </div>
         </div>
     </section>
@@ -322,10 +401,12 @@
         }
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 
-        function handleSignup(e) {
+        function handleFreeProfile(e) {
             e.preventDefault();
-            e.target.style.display = 'none';
-            document.getElementById('signupSuccess').classList.remove('hidden');
+            document.getElementById('freeProfileForm').classList.add('hidden');
+            document.getElementById('freeProfileSuccess').classList.remove('hidden');
+            // Scroll to success message
+            document.getElementById('freeProfileSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     </script>
 </body>
