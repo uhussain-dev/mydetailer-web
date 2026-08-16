@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | MyDetailer</title>
+    <meta name="description" content="MyDetailer Privacy Policy - how we collect, use, and protect your data under UK GDPR.">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#06b6d4">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 950: '#0f172a', 900: '#1e293b', 800: '#1e2a3a' },
+                        cyan: { 400: '#22d3ee', 500: '#06b6d4' },
+                        emerald: { 400: '#34d399', 500: '#10b981' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .drawer-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .drawer-overlay.active { opacity: 1; pointer-events: auto; }
+        .drawer-panel { transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .drawer-panel.active { transform: translateX(0); }
+    </style>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js'); });
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-gray-200 antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-emerald-400 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-slate-950" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2L3 7v11h14V7l-7-5zm0 2.236L15 8v8H5V8l5-3.764z"/></svg>
+                    </div>
+                    <span class="text-xl font-bold text-white">My<span class="text-cyan-400">Detailer</span></span>
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="find-detailers.html" class="text-sm text-gray-400 hover:text-cyan-400 transition">Find Detailers</a>
+                    <a href="pricing-guide.html" class="text-sm text-gray-400 hover:text-cyan-400 transition">Pricing Guide</a>
+                    <a href="stats.html" class="text-sm text-gray-400 hover:text-cyan-400 transition">Stats</a>
+                    <a href="join-as-detailer.html" class="text-sm text-gray-400 hover:text-cyan-400 transition">For Professionals</a>
+                </div>
+                <button onclick="openDrawer()" class="md:hidden p-2 text-gray-400 hover:text-white transition" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="drawerOverlay" class="drawer-overlay fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm" onclick="closeDrawer()"></div>
+    <aside id="drawerPanel" class="drawer-panel fixed top-0 right-0 z-[70] h-full w-72 bg-slate-900 border-l border-slate-700 shadow-2xl flex flex-col">
+        <div class="flex items-center justify-between px-5 py-4 border-b border-slate-800">
+            <span class="text-lg font-bold text-white">My<span class="text-cyan-400">Detailer</span></span>
+            <button onclick="closeDrawer()" class="p-2 text-gray-400 hover:text-white transition" aria-label="Close menu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-5 py-6 space-y-2">
+            <a href="index.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">Home</a>
+            <a href="find-detailers.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">Find Detailers</a>
+            <a href="pricing-guide.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">Pricing Guide</a>
+            <a href="stats.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">Stats</a>
+            <a href="join-as-detailer.html" class="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-300 hover:bg-slate-800/60 hover:text-white text-sm font-medium transition">For Professionals</a>
+        </nav>
+    </aside>
+
+    <!-- Content -->
+    <main class="pt-24 pb-20">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">Privacy Policy</h1>
+            <p class="text-sm text-gray-500 mb-8">Last updated: August 2026</p>
+
+            <div class="prose prose-invert prose-sm max-w-none space-y-6 text-gray-300 text-sm leading-relaxed">
+                <section>
+                    <h2 class="text-lg font-semibold text-white mb-3">1. Data Controller</h2>
+                    <p>MyDetailer Ltd (registered in England &amp; Wales) is the data controller for personal data collected through this platform. Our Data Protection Officer can be contacted at: <span class="text-cyan-400">dpo@mydetailer.co.uk</span></p>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-semibold text-white mb-3">2. Data We Collect</h2>
+                    <p>We collect the following categories of personal data:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1 text-gray-400">
+                        <li><strong class="text-gray-300">Car Owners:</strong> Name, email, phone number, postcode, vehicle details, and service preferences.</li>
+                        <li><strong class="text-gray-300">Business Subscribers:</strong> Business name, contact name, email, phone/WhatsApp, coverage area, business type, services offered, and payment details (processed securely by our payment provider).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-semibold text-white mb-3">3. How We Use Your Data</h2>
+                    <p>Personal data is used to:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1 text-gray-400">
+                        <li>Match car owners with local detailing professionals</li>
+                        <li>Deliver quote requests and lead notifications</li>
+                        <li>Process subscription payments and manage accounts</li>
+                        <li>Send platform communications and service updates</li>
+                        <li>Improve platform features and user experience</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-semibold text-white mb-3">4. Legal Basis for Processing</h2>
+                    <p>We process data under the following lawful bases as defined by UK GDPR:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1 text-gray-400">
+                        <li><strong class="text-gray-300">Contract:</strong> To fulfil our service agreement with subscribers and match car owners with detailers.</li>
+                        <li><strong class="text-gray-300">Legitimate Interest:</strong> To improve platform quality, prevent fraud, and communicate relevant updates.</li>
+                        <li><strong class="text-gray-300">Consent:</strong> For optional marketing communications (you may withdraw consent at any time).</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-semibold text-white mb-3">5. Data Sharing</h2>
+                    <p>We share personal data only with:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1 text-gray-400">
+                        <li>Matched detailing professionals (limited to name, vehicle details, and contact info for quote fulfilment)</li>
+                        <li>Payment processors (Stripe or equivalent) for secure transaction handling</li>
+                        <li>Infrastructure providers strictly necessary for platform operation</li>
+                    </ul>
+                    <p class="mt-2"><strong class="text-white">We never sell personal data to third parties.</strong></p>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-semibold text-white mb-3">6. Data Retention</h2>
+                    <p>We retain personal data for as long as your account is active or as needed to provide services. Business subscriber data is retained for the duration of the subscription plus 6 years for financial record-keeping obligations. You may request deletion at any time subject to legal retention requirements.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-semibold text-white mb-3">7. Your Rights (UK GDPR)</h2>
+                    <p>You have the right to:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1 text-gray-400">
+                        <li>Access your personal data</li>
+                        <li>Rectify inaccurate data</li>
+                        <li>Request erasure ("right to be forgotten")</li>
+                        <li>Restrict or object to processing</li>
+                        <li>Data portability</li>
+                        <li>Lodge a complaint with the ICO (Information Commissioner's Office)</li>
+                    </ul>
+                    <p class="mt-2">To exercise any right, email: <span class="text-cyan-400">dpo@mydetailer.co.uk</span></p>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-semibold text-white mb-3">8. Cookies</h2>
+                    <p>We use essential cookies for platform functionality and optional analytics cookies to understand usage patterns. You can manage cookie preferences through your browser settings.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-semibold text-white mb-3">9. Changes to This Policy</h2>
+                    <p>We may update this policy periodically. Material changes will be communicated via email to registered users. Continued use of the platform constitutes acceptance of the updated policy.</p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-gray-500">&copy; 2024 MyDetailer Ltd. All rights reserved.</p>
+            <div class="flex items-center gap-4">
+                <a href="terms.html" class="text-xs text-gray-400 hover:text-cyan-400 transition">Terms of Service</a>
+                <a href="privacy.html" class="text-xs text-cyan-400 font-medium">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openDrawer() { document.getElementById('drawerOverlay').classList.add('active'); document.getElementById('drawerPanel').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeDrawer() { document.getElementById('drawerOverlay').classList.remove('active'); document.getElementById('drawerPanel').classList.remove('active'); document.body.style.overflow = ''; }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+    </script>
+</body>
+</html>

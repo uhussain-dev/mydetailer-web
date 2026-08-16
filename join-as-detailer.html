@@ -358,8 +358,21 @@
                             <input type="text" name="social_url" placeholder="@yourbusiness or https://..." class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition">
                         </div>
 
+                        <!-- B2B Legal Agreement Checkboxes -->
+                        <div class="space-y-3 pt-2 border-t border-slate-700">
+                            <p class="text-xs font-semibold text-gray-300 pt-3">Legal Agreement</p>
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" id="termsCheck" onchange="toggleSubmitBtn()" class="mt-0.5 w-4 h-4 rounded text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500 flex-shrink-0">
+                                <span class="text-xs text-gray-400">I confirm I am registering as a Business / Sole Trader (B2B) and agree to the MyDetailer <a href="terms.html" class="text-cyan-400 hover:underline">Terms of Service</a> and <a href="privacy.html" class="text-cyan-400 hover:underline">Privacy Policy</a>.</span>
+                            </label>
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" id="billingCheck" onchange="toggleSubmitBtn()" class="mt-0.5 w-4 h-4 rounded text-cyan-500 bg-slate-700 border-slate-600 focus:ring-cyan-500 flex-shrink-0">
+                                <span class="text-xs text-gray-400">I agree that my chosen plan will be billed immediately and auto-renews automatically until cancelled in my dashboard. I understand that upfront subscription fees are non-refundable.</span>
+                            </label>
+                        </div>
+
                         <!-- Submit Button -->
-                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl hover:opacity-90 transition glow-cyan flex items-center justify-center gap-2 mt-2">
+                        <button id="submitBtn" type="submit" disabled class="w-full py-4 bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-bold text-sm rounded-xl transition glow-cyan flex items-center justify-center gap-2 mt-2 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none hover:opacity-90">
                             Submit &amp; Claim Free Profile
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </button>
@@ -407,11 +420,16 @@
         }
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 
+        function toggleSubmitBtn() {
+            const terms = document.getElementById('termsCheck').checked;
+            const billing = document.getElementById('billingCheck').checked;
+            document.getElementById('submitBtn').disabled = !(terms && billing);
+        }
+
         function handleFreeProfile(e) {
             e.preventDefault();
             document.getElementById('freeProfileForm').classList.add('hidden');
             document.getElementById('freeProfileSuccess').classList.remove('hidden');
-            // Scroll to success message
             document.getElementById('freeProfileSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     </script>
